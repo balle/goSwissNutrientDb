@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -29,6 +30,22 @@ type Food struct {
 	Amount        float64 `json:"amount"`
 	FoodId        int     `json:"foodid"`
 	ValueTypeCode string  `json:"valueTypeCode"`
+}
+
+type FoodList []Food
+
+func (f FoodList) Len() int {
+	return len(f)
+}
+
+func (f FoodList) Less(i, j int) bool {
+	return f[i].Amount > f[j].Amount
+}
+
+func (f FoodList) Swap(i, j int) {
+	tmp := f[j]
+	f[j] = f[i]
+	f[i] = tmp
 }
 
 // Set the language used to query and for answers
@@ -84,6 +101,8 @@ func GetFoodWithComponent(componentId int) ([]Food, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	sort.Sort(FoodList(result))
 
 	return result, nil
 }
