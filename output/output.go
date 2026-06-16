@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/balle/goSwissNutrientDb/nutrientdb"
@@ -42,7 +43,12 @@ func GeneratePdf(filename string, title string, foodList []nutrientdb.Food) erro
 	}
 
 	for _, food := range foodList {
+		pdf.Text(strconv.Itoa(int(food.Amount)))
+		x = 35
+		pdf.SetXY(x, y)
+
 		pdf.Text(food.Name)
+		x = 15
 		y += 15
 		pdf.SetXY(x, y)
 	}
