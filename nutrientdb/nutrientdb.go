@@ -4,6 +4,7 @@ package nutrientdb
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"net/http"
 	"sort"
 	"strconv"
@@ -39,11 +40,11 @@ func (f FoodList) Len() int {
 }
 
 func (f FoodList) Less(i, j int) bool {
-	if int(f[i].Amount) == int(f[j].Amount) {
+	if math.Round(f[i].Amount) == math.Round(f[j].Amount) {
 		return strings.ToLower(f[i].Name) < strings.ToLower(f[j].Name)
 	}
 
-	return int(f[i].Amount) > int(f[j].Amount)
+	return math.Round(f[i].Amount) > math.Round(f[j].Amount)
 }
 
 func (f FoodList) Swap(i, j int) {

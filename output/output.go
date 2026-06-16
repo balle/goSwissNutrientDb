@@ -3,6 +3,7 @@ package output
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -43,8 +44,8 @@ func GeneratePdf(filename string, title string, foodList []nutrientdb.Food) erro
 	}
 
 	for _, food := range foodList {
-		pdf.Text(strconv.Itoa(int(food.Amount)))
-		x = 35
+		pdf.Text(strconv.FormatFloat(math.Round(food.Amount), 'f', 1, 64))
+		x = 50
 		pdf.SetXY(x, y)
 
 		pdf.Text(food.Name)
