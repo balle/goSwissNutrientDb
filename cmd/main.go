@@ -34,8 +34,10 @@ func main() {
 		log.Fatalf("Cannot find food with %s: %v", *component, err)
 	}
 
-	for _, food := range foodList {
-		fmt.Printf("%v\n", food)
+	if *pdfFilename == "" && *jsonFilename != "" {
+		for _, food := range foodList {
+			fmt.Printf("%v\n", food)
+		}
 	}
 
 	if *pdfFilename != "" {
