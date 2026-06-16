@@ -39,7 +39,11 @@ func (f FoodList) Len() int {
 }
 
 func (f FoodList) Less(i, j int) bool {
-	return f[i].Amount > f[j].Amount
+	if int(f[i].Amount) == int(f[j].Amount) {
+		return strings.ToLower(f[i].Name) < strings.ToLower(f[j].Name)
+	}
+
+	return int(f[i].Amount) > int(f[j].Amount)
 }
 
 func (f FoodList) Swap(i, j int) {
