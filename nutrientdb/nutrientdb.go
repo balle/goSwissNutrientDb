@@ -11,9 +11,10 @@ import (
 	"strings"
 )
 
-const baseUrl = "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api"
+var baseURL = "https://api.webapp.prod.blv.foodcase-services.com/BLV_WebApp_WS/webresources/BLV-api"
 
 var lang string = "en"
+var httpGet = http.Get
 
 type Component struct {
 	ID    int    `json:"id"`
@@ -115,13 +116,13 @@ func GetFoodWithComponent(componentId int) ([]Food, error) {
 // Generic fetch function to handle all api requests
 func fetch[T any](resource string, opts map[string]string) ([]T, error) {
 	var result []T
-	url := fmt.Sprintf("%s/%s?lang=%s", baseUrl, resource, lang)
+	url := fmt.Sprintf("%s/%s?lang=%s", baseURL, resource, lang)
 
 	for key, value := range opts {
 		url = fmt.Sprintf("%s&%s=%s", url, key, value)
 	}
 
-	res, err := http.Get(url)
+	res, err := httpGet(url)
 
 	if err != nil {
 		return nil, err
